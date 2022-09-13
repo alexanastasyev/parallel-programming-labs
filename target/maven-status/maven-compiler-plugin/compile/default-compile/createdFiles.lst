@@ -1,1 +1,3 @@
-org\example\CircleAreaSolver.class
+org\example\Runner.class
+org\example\integration\InvalidLimitsException.class
+org\example\integration\IntegralSolver.class
