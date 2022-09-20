@@ -5,14 +5,15 @@ import java.util.function.Function;
 
 public class IntegralSolver {
 
-    public double solveIntegral(Function<Double, Double> function, double lowerLimit, double upperLimit, int exactNumbers) {
-        return this.solveIntegral(function, lowerLimit, upperLimit, exactNumbers, progress -> {
-        });
-    }
+    private Function<Double, Double> function;
+    private double lowerLimit;
+    private double upperLimit;
+    private int exactNumbers;
+    private Consumer<Byte> progressCallback = progress -> {};
 
-    public double solveIntegral(Function<Double, Double> function, double lowerLimit, double upperLimit, int exactNumbers, Consumer<Byte> callback) {
+    public double solveIntegral() {
         if (lowerLimit > upperLimit) {
-            throw new InvalidLimitsException();
+            throw new InvalidLimitsException("Lower limit should lower then upper limit");
         }
         if (lowerLimit == upperLimit) {
             return 0;
@@ -24,7 +25,7 @@ public class IntegralSolver {
         for (double i = lowerLimit; i <= (upperLimit - increment); i += increment) {
             accumulator += increment * function.apply((i + i + increment) / 2);
             byte progress = (byte) Math.round( (((float) currentIteration) / segmentsNumber) * 100 );
-            callback.accept(progress);
+            progressCallback.accept(progress);
             currentIteration++;
         }
         return accumulator;
@@ -37,6 +38,42 @@ public class IntegralSolver {
             segmentsNumber++;
         }
         return segmentsNumber;
+    }
+
+    public static class Builder {
+        private final IntegralSolver integralSolver = new IntegralSolver();
+
+        public IntegralSolver.Builder function(Function<Double, Double> function) {
+            integralSolver.function = function;
+            return this;
+        }
+
+        public IntegralSolver.Builder lowerLimit(double lowerLimit) {
+            integralSolver.lowerLimit = lowerLimit;
+            return this;
+        }
+
+        public IntegralSolver.Builder upperLimit(double upperLimit) {
+            integralSolver.upperLimit = upperLimit;
+            return this;
+        }
+
+        public IntegralSolver.Builder exactNumbers(int exactNumbers) {
+            integralSolver.exactNumbers = exactNumbers;
+            return this;
+        }
+
+        public IntegralSolver.Builder progressCallback(Consumer<Byte> progressCallback) {
+            integralSolver.progressCallback = progressCallback;
+            return this;
+        }
+
+        public IntegralSolver build() {
+            if (integralSolver.function == null) {
+                throw new IllegalArgumentException("You must provide a function to solve integral");
+            }
+            return integralSolver;
+        }
     }
 
 }
