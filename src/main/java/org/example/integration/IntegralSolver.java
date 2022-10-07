@@ -9,7 +9,8 @@ public class IntegralSolver {
     private double lowerLimit;
     private double upperLimit;
     private int exactNumbers;
-    private Consumer<Byte> progressCallback = progress -> {};
+    private Consumer<Integer> progressCallback = progress -> {
+    };
 
     public double solveIntegral() {
         if (lowerLimit > upperLimit) {
@@ -21,11 +22,14 @@ public class IntegralSolver {
         int segmentsNumber = calculateSegmentsNumber(lowerLimit, upperLimit, exactNumbers);
         double increment = (upperLimit - lowerLimit) / segmentsNumber;
         double accumulator = 0;
-        int currentIteration = 0;
+        long currentIteration = 0;
+        int iterationIncrement = segmentsNumber / 20;
         for (double i = lowerLimit; i <= (upperLimit - increment); i += increment) {
             accumulator += increment * function.apply((i + i + increment) / 2);
-            byte progress = (byte) Math.round( (((float) currentIteration) / segmentsNumber) * 100 );
-            progressCallback.accept(progress);
+            if (currentIteration % iterationIncrement == 0) {
+                int progress = (int) ((currentIteration * 100) / segmentsNumber);
+                progressCallback.accept(progress);
+            }
             currentIteration++;
         }
         return accumulator;
@@ -63,7 +67,7 @@ public class IntegralSolver {
             return this;
         }
 
-        public IntegralSolver.Builder progressCallback(Consumer<Byte> progressCallback) {
+        public IntegralSolver.Builder progressCallback(Consumer<Integer> progressCallback) {
             integralSolver.progressCallback = progressCallback;
             return this;
         }

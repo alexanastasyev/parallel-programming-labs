@@ -19,13 +19,7 @@ public class Runner {
     }
 
     private static double solveIntegralFromTask() {
-        AtomicReference<Byte> lastProgress = new AtomicReference<>((byte) 0);
-        Consumer<Byte> callback = progress -> {
-            if ((progress - lastProgress.get()) >= 5) {
-                System.out.println(progress + " %");
-                lastProgress.set(progress);
-            }
-        };
+        Consumer<Integer> callback = (progress) -> System.out.println(progress + " %");
 
         IntegralSolver integralSolver = new IntegralSolver.Builder()
                 .function(x -> Math.sin(x) * x)
