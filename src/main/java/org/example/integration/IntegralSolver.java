@@ -12,7 +12,7 @@ public class IntegralSolver {
     private Consumer<Integer> progressCallback = progress -> {
     };
 
-    public double solveIntegral() {
+    public double solveIntegral() throws InterruptedException {
         if (lowerLimit > upperLimit) {
             throw new InvalidLimitsException("Lower limit should lower then upper limit");
         }
@@ -25,6 +25,9 @@ public class IntegralSolver {
         long currentIteration = 0;
         int iterationIncrement = segmentsNumber / 20;
         for (double i = lowerLimit; i <= (upperLimit - increment); i += increment) {
+            if (Thread.currentThread().isInterrupted()) {
+                throw new InterruptedException("Thread is interrupted");
+            }
             accumulator += increment * function.apply((i + i + increment) / 2);
             if (currentIteration % iterationIncrement == 0) {
                 int progress = (int) ((currentIteration * 100) / segmentsNumber);
