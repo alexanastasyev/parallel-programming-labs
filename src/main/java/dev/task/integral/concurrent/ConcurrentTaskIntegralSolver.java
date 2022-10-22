@@ -1,6 +1,6 @@
-package org.example.concurrent;
+package dev.task.integral.concurrent;
 
-import org.example.integration.IntegralSolver;
+import dev.task.integral.integration.IntegralSolver;
 
 import java.util.ArrayList;
 import java.util.List;

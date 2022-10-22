@@ -1,4 +1,4 @@
-package org.example.integration;
+package dev.task.integral.integration;
 
 public class InvalidLimitsException extends RuntimeException {
     public InvalidLimitsException() {
