@@ -7,7 +7,7 @@ public class Runner {
         ConcurrentTaskIntegralSolver solver = new ConcurrentTaskIntegralSolver();
 
         long start = System.currentTimeMillis();
-        double result = solver.solve(12, (progress, total) -> System.out.println(progress + " / " + total));
+        double result = solver.solve(12, (progress, total) -> System.out.println("Progress: " + progress + " / " + total));
         long finish = System.currentTimeMillis();
 
         System.out.println("Result: " + result);

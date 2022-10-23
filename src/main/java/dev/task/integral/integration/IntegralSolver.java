@@ -44,6 +44,7 @@ public class IntegralSolver {
         return segmentsNumber;
     }
 
+    @SuppressWarnings("unused")
     public static class Builder {
         private final IntegralSolver integralSolver = new IntegralSolver();
 

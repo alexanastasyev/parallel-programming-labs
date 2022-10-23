@@ -3,6 +3,7 @@ package dev.task.integral.concurrent;
 import dev.task.integral.integration.IntegralSolver;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -13,16 +14,20 @@ public class SolveIntegralTask implements Callable<Double> {
     private final double upperLimit;
     private final Function<Double, Double> function;
     private final Consumer<Boolean> onFinish;
+    private final Semaphore semaphore;
 
-    public SolveIntegralTask(double lowerLimit, double upperLimit, Function<Double, Double> function, Consumer<Boolean> onFinish) {
+    public SolveIntegralTask(double lowerLimit, double upperLimit, Function<Double, Double> function, Consumer<Boolean> onFinish, Semaphore semaphore) {
         this.lowerLimit = lowerLimit;
         this.upperLimit = upperLimit;
         this.function = function;
         this.onFinish = onFinish;
+        this.semaphore = semaphore;
     }
 
     @Override
     public Double call() throws Exception {
+        semaphore.acquire();
+
         IntegralSolver integralSolver = new IntegralSolver.Builder()
                 .function(function)
                 .lowerLimit(lowerLimit)
@@ -32,6 +37,9 @@ public class SolveIntegralTask implements Callable<Double> {
 
         double result = integralSolver.solveIntegral();
         onFinish.accept(true);
+
+        semaphore.release();
+
         return result;
     }
 }
