@@ -13,6 +13,7 @@ public class IntegralSolver {
     };
 
     public double solveIntegral() {
+//        throw new RuntimeException();
         if (lowerLimit > upperLimit) {
             throw new InvalidLimitsException("Lower limit should lower then upper limit");
         }

@@ -46,16 +46,13 @@ public class SymbolInFilesSearcher {
             }
         });
         executorService.shutdownNow();
-        if (!found) {
-            onFinish.accept(false);
-        }
+        onFinish.accept(found);
     }
 
     private synchronized void incrementUntil(int amount) {
         symbolsCounter++;
         if (symbolsCounter == amount) {
             found = true;
-            onFinish.accept(true);
             executorService.shutdownNow();
         }
     }

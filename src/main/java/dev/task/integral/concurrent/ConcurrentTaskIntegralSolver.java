@@ -36,12 +36,11 @@ public class ConcurrentTaskIntegralSolver {
             allTasksFinishLatch.countDown();
             tasksFinishTimestamps.add(System.currentTimeMillis());
 
-            progressLock.lock();
-
-            progress.set(progress.get() + 1);
-            progressCallback.accept(progress.get(), threadsNum);
-
-            progressLock.unlock();
+            if (progressLock.tryLock()) {
+                progress.set(progress.get() + 1);
+                progressCallback.accept(progress.get(), threadsNum);
+                progressLock.unlock();
+            }
         };
 
         Semaphore semaphore = new Semaphore(MULTY_THREADS_AMOUNT);
