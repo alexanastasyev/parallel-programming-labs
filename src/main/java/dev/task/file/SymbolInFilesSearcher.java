@@ -32,7 +32,7 @@ public class SymbolInFilesSearcher {
             incrementUntil(amount);
         };
 
-        Collection<Future<Boolean>> futures = new ArrayList<>();
+        Collection<Future<Void>> futures = new ArrayList<>();
         filenames.forEach(filename -> {
             SearchSymbolInFileTask searchTask = new SearchSymbolInFileTask(filename, searchSymbol, onFind);
             futures.add(executorService.submit(searchTask));
