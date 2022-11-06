@@ -23,8 +23,8 @@ public class SimpleSemaphoreTest {
         Thread thread1 = new Thread(() -> {
             try {
                 latch.await();
-                firstDone.set(true);
                 semaphore.acquire();
+                firstDone.set(true);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             } finally {
@@ -35,8 +35,8 @@ public class SimpleSemaphoreTest {
         Thread thread2 = new Thread(() -> {
             try {
                 latch.await();
-                secondDone.set(true);
                 semaphore.acquire();
+                secondDone.set(true);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             } finally {
@@ -71,8 +71,8 @@ public class SimpleSemaphoreTest {
         Thread thread1 = new Thread(() -> {
             try {
                 latchThreadsStart.await();
-                firstDone.set(true);
                 semaphore.acquire();
+                firstDone.set(true);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             } finally {
@@ -85,8 +85,8 @@ public class SimpleSemaphoreTest {
             try {
                 latchThreadsStart.await();
                 latchSecondThreadWait.await();
-                secondDone.set(true);
                 semaphore.acquire();
+                secondDone.set(true);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             } finally {
