@@ -1,9 +1,9 @@
-package dev.task.integral.concurrent;
+package dev.task.integral.async;
 
+import dev.task.concurrent.semaphore.SimpleSemaphore;
 import dev.task.integral.integration.IntegralSolver;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -14,9 +14,9 @@ public class SolveIntegralTask implements Callable<Double> {
     private final double upperLimit;
     private final Function<Double, Double> function;
     private final Consumer<Boolean> onFinish;
-    private final Semaphore semaphore;
+    private final SimpleSemaphore semaphore;
 
-    public SolveIntegralTask(double lowerLimit, double upperLimit, Function<Double, Double> function, Consumer<Boolean> onFinish, Semaphore semaphore) {
+    public SolveIntegralTask(double lowerLimit, double upperLimit, Function<Double, Double> function, Consumer<Boolean> onFinish, SimpleSemaphore semaphore) {
         this.lowerLimit = lowerLimit;
         this.upperLimit = upperLimit;
         this.function = function;

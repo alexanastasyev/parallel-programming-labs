@@ -1,6 +1,6 @@
 package dev.task.integral;
 
-import dev.task.integral.concurrent.ConcurrentTaskIntegralSolver;
+import dev.task.integral.async.ConcurrentTaskIntegralSolver;
 
 public class Runner {
     public static void main(String[] args) {

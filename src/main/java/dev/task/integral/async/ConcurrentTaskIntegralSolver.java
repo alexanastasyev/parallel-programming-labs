@@ -1,4 +1,7 @@
-package dev.task.integral.concurrent;
+package dev.task.integral.async;
+
+import dev.task.concurrent.semaphore.SimpleSemaphore;
+import dev.task.concurrent.semaphore.SimpleSemaphoreImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,8 @@ public class ConcurrentTaskIntegralSolver {
             }
         };
 
-        Semaphore semaphore = new Semaphore(MULTY_THREADS_AMOUNT);
+//        Semaphore semaphore = new Semaphore(MULTY_THREADS_AMOUNT);
+        SimpleSemaphore semaphore = new SimpleSemaphoreImpl(MULTY_THREADS_AMOUNT);
         for (int i = 0; i < threadsNum; i++) {
             double currentLowerLimit = lowerLimit;
             double currentUpperLimit = upperLimit;
